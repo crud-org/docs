@@ -20,134 +20,202 @@ TODO: description. <a href="https://www.notion.so/patchByPatchWithId-1379e3681d4
 
 ## Global rules
 
-<details><summary>Asyncability</summary>
-<Tabs><TabItem label="Request">
+<details>
+<summary>Asyncability</summary>
+<Tabs>
+<TabItem label="Request">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Expect` <Badge text="SHOULD" variant="caution" size="small" /> **be** nothing **if** if the client supports only sync operations <br/><em>Default scenario</em></li></ul> |
-| Header | <ul><li>`Expect` <Badge text="MUST" variant="danger" size="small" /> **be** 202-accepted **if** if the client supports only async operations </li></ul> |
-| Header | <ul><li>`Prefer` <Badge text="MUST" variant="danger" size="small" /> **be** respond-async **if** if the client supports both sync and async operations </li></ul> |
-| Header | <ul><li>`WebHook-Request-Callback` <Badge text="MUST" variant="danger" size="small" /> **be** webhook URL **if** if the client is able to specify a callback endpoint (a “webhook”) <br/><em>Webhook callbacks</em></li></ul> |
-| Header | <ul><li>`WebHook-Error-Callback` <Badge text="MAY" variant="success" size="small" /> **be** webhook URL **if** if the client is able to specify a callback endpoint (a “webhook”) <br/><em>Webhook callbacks</em></li></ul> |
+
+  | Header | <ul><li>`Expect` <Badge text="MUST" variant="danger" size="small" /> **be** 202-accepted **if** if the client supports only async operations </li></ul> |
+
+  | Header | <ul><li>`Prefer` <Badge text="MUST" variant="danger" size="small" /> **be** respond-async **if** if the client supports both sync and async operations </li></ul> |
+
+  | Header | <ul><li>`WebHook-Request-Callback` <Badge text="MUST" variant="danger" size="small" /> **be** webhook URL **if** if the client is able to specify a callback endpoint (a “webhook”) <br/><em>Webhook callbacks</em></li></ul> |
+
+  | Header | <ul><li>`WebHook-Error-Callback` <Badge text="MAY" variant="success" size="small" /> **be** webhook URL **if** if the client is able to specify a callback endpoint (a “webhook”) <br/><em>Webhook callbacks</em></li></ul> |
 
 </TabItem>
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 200 | 204 **if** if a server only support synchronous operations <br/><em>Default scenario</em></li></ul> |
-| Status | <ul><li>`code` <Badge text="MAY" variant="success" size="small" /> **be** 417 **if** if a server only support synchronous operations + if a client sends an Expect: 202-Accepted header </li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 417 **if** if a server supports only async operations + if client is sync-only </li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 202 **if** if a server supports async operations + if a client sends an Expect: 202-Accepted header </li></ul> |
-| Header | <ul><li>`Location` <Badge text="MUST" variant="danger" size="small" /> **be** operation result URL **if** if a server supports async operations + if a client sends an Expect: 202-Accepted header </li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 425 **if** fi the operation endpoint is not yet available (still running) <br/><em>Recurrent polling</em></li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 200 **if** if the operation endpoint is ready and the operation was successful <br/><em>Recurrent polling</em></li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 500 **if** if the operation endpoint is ready but the operation was failed <br/><em>Recurrent polling</em></li></ul> |
-| Body | <ul><li>`error` <Badge text="MUST" variant="danger" size="small" /> **exists** **if** if the operation endpoint is ready but the operation was failed <br/><em>Recurrent polling</em></li></ul> |
 
-</TabItem></Tabs></details>
-<details><summary>PreferHandling</summary>
-<Tabs><TabItem label="Request">
+  | Status | <ul><li>`code` <Badge text="MAY" variant="success" size="small" /> **be** 417 **if** if a server only support synchronous operations + if a client sends an Expect: 202-Accepted header </li></ul> |
+
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 417 **if** if a server supports only async operations + if client is sync-only </li></ul> |
+
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 202 **if** if a server supports async operations + if a client sends an Expect: 202-Accepted header </li></ul> |
+
+  | Header | <ul><li>`Location` <Badge text="MUST" variant="danger" size="small" /> **be** operation result URL **if** if a server supports async operations + if a client sends an Expect: 202-Accepted header </li></ul> |
+
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 425 **if** fi the operation endpoint is not yet available (still running) <br/><em>Recurrent polling</em></li></ul> |
+
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 200 **if** if the operation endpoint is ready and the operation was successful <br/><em>Recurrent polling</em></li></ul> |
+
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 500 **if** if the operation endpoint is ready but the operation was failed <br/><em>Recurrent polling</em></li></ul> |
+
+  | Body | <ul><li>`error` <Badge text="MUST" variant="danger" size="small" /> **exists** **if** if the operation endpoint is ready but the operation was failed <br/><em>Recurrent polling</em></li></ul> |
+
+</TabItem>
+</Tabs>
+</details>
+<details>
+<summary>PreferHandling</summary>
+<Tabs>
+<TabItem label="Request">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** handling=lenient **if** in case of the client is explicitly lenient to optional validation rules </li></ul> |
-| Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** handling=strict **if** in case of the client is strict to optional validation rules </li></ul> |
+
+  | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** handling=strict **if** in case of the client is strict to optional validation rules </li></ul> |
 
 </TabItem>
-</Tabs></details>
-<details><summary>PreferReturn</summary>
-<Tabs><TabItem label="Request">
+
+
+</Tabs>
+</details>
+<details>
+<summary>PreferReturn</summary>
+<Tabs>
+<TabItem label="Request">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** return=minimal **if** if the client prefer just the operation status </li></ul> |
-| Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** return=representation **if** if the client prefer the result document(s) which the operation was applied <br/><em>Default if ommited</em></li></ul> |
+
+  | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** return=representation **if** if the client prefer the result document(s) which the operation was applied <br/><em>Default if ommited</em></li></ul> |
 
 </TabItem>
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 200 **if** if the client sent Prefer: return=representation </li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 204 **if** if the client sent Prefer: return=minimal </li></ul> |
-| Header | <ul><li>`Content-Location` <Badge text="MUST" variant="danger" size="small" /> **be** getByGetWithId(id) **if** if the client sent Prefer: return=representation </li></ul> |
-| Header | <ul><li>`Location` <Badge text="MUST" variant="danger" size="small" /> **be** getByGetWithId(id) **if** if the client sent Prefer: return=minimal </li></ul> |
 
-</TabItem></Tabs></details>
-<details><summary>Errors</summary>
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 204 **if** if the client sent Prefer: return=minimal </li></ul> |
+
+  | Header | <ul><li>`Content-Location` <Badge text="MUST" variant="danger" size="small" /> **be** getByGetWithId(id) **if** if the client sent Prefer: return=representation </li></ul> |
+
+  | Header | <ul><li>`Location` <Badge text="MUST" variant="danger" size="small" /> **be** getByGetWithId(id) **if** if the client sent Prefer: return=minimal </li></ul> |
+
+</TabItem>
+</Tabs>
+</details>
+<details>
+<summary>Errors</summary>
 <Tabs>
+
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** >399  </li></ul> |
-| Body | <ul><li>`code` <Badge text="SHOULD" variant="caution" size="small" /> **be** unique code  </li></ul> |
-| Body | <ul><li>`description` <Badge text="SHOULD" variant="caution" size="small" /> **exists**  </li></ul> |
-| Body | <ul><li>`[other]` <Badge text="MAY" variant="success" size="small" /> **be** help info  </li></ul> |
 
-</TabItem></Tabs></details>
-<details><summary>EJSON</summary>
-<Tabs><TabItem label="Request">
+  | Body | <ul><li>`code` <Badge text="SHOULD" variant="caution" size="small" /> **be** unique code  </li></ul> |
+
+  | Body | <ul><li>`description` <Badge text="SHOULD" variant="caution" size="small" /> **exists**  </li></ul> |
+
+  | Body | <ul><li>`[other]` <Badge text="MAY" variant="success" size="small" /> **be** help info  </li></ul> |
+
+</TabItem>
+</Tabs>
+</details>
+<details>
+<summary>EJSON</summary>
+<Tabs>
+<TabItem label="Request">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Content-Type` <Badge text="SHOULD" variant="caution" size="small" /> **be** application/vnd.ejson+json  </li></ul> |
-| Body | <ul><li>`` <Badge text="SHOULD" variant="caution" size="small" /> **be** EJSON serialized  </li></ul> |
+
+  | Body | <ul><li>`` <Badge text="SHOULD" variant="caution" size="small" /> **be** EJSON serialized  </li></ul> |
 
 </TabItem>
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Body | <ul><li>`` <Badge text="SHOULD" variant="caution" size="small" /> **be** EJSON serialized  </li></ul> |
-| Header | <ul><li>`Content-Type` <Badge text="SHOULD" variant="caution" size="small" /> **be** application/vnd.ejson+json  </li></ul> |
 
-</TabItem></Tabs></details>
-<details><summary>NoEnvelopes</summary>
-<Tabs><TabItem label="Request">
+  | Header | <ul><li>`Content-Type` <Badge text="SHOULD" variant="caution" size="small" /> **be** application/vnd.ejson+json  </li></ul> |
+
+</TabItem>
+</Tabs>
+</details>
+<details>
+<summary>NoEnvelopes</summary>
+<Tabs>
+<TabItem label="Request">
 
   |  |  |
   | --- | --- |
   | Body | <ul><li>`` <Badge text="MUST" variant="danger" size="small" /> **be** unenveloped resource  </li></ul> |
 
 </TabItem>
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Body | <ul><li>`` <Badge text="MUST" variant="danger" size="small" /> **be** unenveloped resource  </li></ul> |
 
-</TabItem></Tabs></details>
-<details><summary>X-Request-Id</summary>
+</TabItem>
+</Tabs>
+</details>
+<details>
+<summary>X-Request-Id</summary>
 <Tabs>
+
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`X-Request-Id` <Badge text="SHOULD" variant="caution" size="small" /> **be** new uuid-hex   <br/><em>a fresh new uuid-hex generated by the API server</em></li></ul> |
 
-</TabItem></Tabs></details>
-<details><summary>ContentTypes</summary>
-<Tabs><TabItem label="Request">
+</TabItem>
+</Tabs>
+</details>
+<details>
+<summary>ContentTypes</summary>
+<Tabs>
+<TabItem label="Request">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Accept` <Badge text="MUST" variant="danger" size="small" /> **exists**  </li></ul> |
 
 </TabItem>
+
 <TabItem label="Response">
 
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Content-Type` <Badge text="MUST" variant="danger" size="small" /> **exists**  </li></ul> |
-| Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 406 **if** if the Content-Type not matches the Accept request header </li></ul> |
 
-</TabItem></Tabs></details>
+  | Status | <ul><li>`code` <Badge text="MUST" variant="danger" size="small" /> **be** 406 **if** if the Content-Type not matches the Accept request header </li></ul> |
+
+</TabItem>
+</Tabs>
+</details>
 
 ## Operation rules
 
-<details><summary>SlugParameters</summary>
+<details>
+<summary>SlugParameters</summary>
 <Tabs>
-</Tabs></details>
+
+
+
+</Tabs>
+</details>
