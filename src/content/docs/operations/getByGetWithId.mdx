@@ -28,13 +28,9 @@ TODO: description. <a href="https://www.notion.so/getByGetWithId-1379e3681d4880b
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Expect` <Badge text="SHOULD" variant="caution" size="small" /> **be** nothing **if** if the client supports only sync operations <br/><em>Default scenario</em></li></ul> |
-
   | Header | <ul><li>`Expect` <Badge text="MUST" variant="danger" size="small" /> **be** 202-accepted **if** if the client supports only async operations </li></ul> |
-
   | Header | <ul><li>`Prefer` <Badge text="MUST" variant="danger" size="small" /> **be** respond-async **if** if the client supports both sync and async operations </li></ul> |
-
   | Header | <ul><li>`WebHook-Request-Callback` <Badge text="MUST" variant="danger" size="small" /> **be** webhook URL **if** if the client is able to specify a callback endpoint (a “webhook”) <br/><em>Webhook callbacks</em></li></ul> |
-
   | Header | <ul><li>`WebHook-Error-Callback` <Badge text="MAY" variant="success" size="small" /> **be** webhook URL **if** if the client is able to specify a callback endpoint (a “webhook”) <br/><em>Webhook callbacks</em></li></ul> |
 
 </TabItem>
@@ -72,7 +68,6 @@ TODO: description. <a href="https://www.notion.so/getByGetWithId-1379e3681d4880b
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** handling=lenient **if** in case of the client is explicitly lenient to optional validation rules </li></ul> |
-
   | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** handling=strict **if** in case of the client is strict to optional validation rules </li></ul> |
 
 </TabItem>
@@ -88,7 +83,6 @@ TODO: description. <a href="https://www.notion.so/getByGetWithId-1379e3681d4880b
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** return=minimal **if** if the client prefer just the operation status </li></ul> |
-
   | Header | <ul><li>`Prefer` <Badge text="SHOULD" variant="caution" size="small" /> **be** return=representation **if** if the client prefer the result document(s) which the operation was applied <br/><em>Default if ommited</em></li></ul> |
 
 </TabItem>
@@ -136,7 +130,6 @@ TODO: description. <a href="https://www.notion.so/getByGetWithId-1379e3681d4880b
   |  |  |
   | --- | --- |
   | Header | <ul><li>`Content-Type` <Badge text="SHOULD" variant="caution" size="small" /> **be** application/vnd.ejson+json  </li></ul> |
-
   | Body | <ul><li>`` <Badge text="SHOULD" variant="caution" size="small" /> **be** EJSON serialized  </li></ul> |
 
 </TabItem>
